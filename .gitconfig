@@ -1,0 +1,96 @@
+[alias]
+	a = add -p # Add patches
+	aa = !git add -u && git add . && git st # Add tracked files, files inside current folder and show status
+	aacm = !git add -A . && git commit -m # Blast everything you can
+	addx = update-index --chmod=+x # Useful if you are on windows, to make scripts runnable on checkout
+	b = branch
+	bd = branch -d
+	bD = branch -D
+	bdm = "!git branch --merged | grep -v '*' | xargs -n 1 git branch -d" # Delete branches merged in current branch
+	ca = commit --amend --no-edit # Amend without editing commit message
+	cb = "!cb() { git checkout $1 -- $2; }; cb" # Checkout a file from another branch [git cb other-branch /file/to/checkout]
+	cm = commit -m
+	co = checkout
+	cob = checkout -B # Create a new branch or move to an existing one
+	cp = cherry-pick
+	dc  = diff --cached # Show what you intend to commit
+	f = "!git ls-files | grep -i" # Find a file tracked by git
+	gr = grep -Ii
+	master = !git checkout master && git pull origin # Checkout & pull master 
+	mt = mergetool
+	l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+	lll = log -u
+	ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+	plog = log --graph --pretty='format:%C(red)%d%C(reset) %C(yellow)%h%C(reset) %ar %C(green)%aN%C(reset) %s'
+	la = "!git config -l | grep alias | cut -c 7-"
+	pr = pull --rebase
+	Pf = push --force-with-lease # Push force ensuring that this won't loose someone else's work
+	r = rebase
+	rank = shortlog -sn --no-merges
+	re1 = reset HEAD^
+	reh = reset --hard
+	ri = rebase -i
+	s = "!stage() { git add `git st | sed -n $1p | awk -F' ' '{ print $2 }'`; git st; }; stage"
+	st = "!git status -s | cat -n"
+	u = "!unstage() { git reset HEAD `git st | sed -n $1p | awk -F' ' '{ print $2 }'`; git st; }; unstage"
+[color]
+	ui = auto
+[color "branch"]
+  	# Blue on black is hard to read in git branch -vv: use cyan instead
+  	upstream = cyan
+[core]
+	#editor = code --wait
+
+	# Don't consider trailing space change as a cause for merge conflicts
+	whitespace = -trailing-space
+[credential]
+	helper = cache --timeout=28800
+[diff]
+  	# Use better, descriptive initials (c, i, w) instead of a/b.
+  	mnemonicPrefix = true
+  	# Show renames/moves as such
+  	renames = true
+  	# Use VSCode as default diff tool when running `git diff-tool`
+  	tool = vscode
+[difftool "vscode"]
+  	cmd = code --wait --diff $LOCAL $REMOTE
+[grep]
+  	break = true
+  	heading = true
+  	lineNumber = true
+  	# Consider most regexes to be ERE
+  	extendedRegexp = true
+[log]
+  	# Automatically --follow when given a single path
+  	follow = true
+[merge]
+	tool = meld
+[mergetool]
+  	# Clean up backup files created by merge tools on tool exit
+  	keepBackup = false
+  	# Clean up temp files created by merge tools on tool exit
+  	keepTemporaries = false
+  	# Put the temp files in a dedicated dir anyway
+  	writeToTemp = true
+  	# Auto-accept file prompts when launching merge tools
+  	prompt = false
+[push]
+  	# Default push should only push the current branch to its push target, regardless of its remote name
+  	default = upstream
+[rebase]
+  	# Automatically stash current WD and stage when running rebase
+  	# then you won't have to manually `git stash push` and `git stash pop`
+  	# after and before your rebase.
+  	autoStash = true
+[status]
+  	# Display submodule rev change summaries in status
+  	submoduleSummary = true
+  	# Recursively traverse untracked directories to display all contents
+  	showUntrackedFiles = all
+[tag]
+  	# Sort tags as version numbers whenever applicable, so 1.10.2 is AFTER 1.2.0.
+  	sort = version:refname
+[user]
+	email = anthony.debortoli@protonmail.com
+	name = Anthony De Bortoli
