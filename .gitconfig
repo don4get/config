@@ -44,6 +44,8 @@
 
 	# Don't consider trailing space change as a cause for merge conflicts
 	whitespace = -trailing-space
+[credential]
+	helper = cache --timeout=28800
 [diff]
   	# Use better, descriptive initials (c, i, w) instead of a/b.
   	mnemonicPrefix = true
